@@ -7,7 +7,11 @@ const register = () => {
     // Chiamata API
     // If SUCCESS redirect to EventDetails
 
-    // router.replace non salva la pagina nella storia di navigazione
+    /**
+     * router.replace non salva la pagina nella storia di navigazione
+     * router.go(-1) va una pagina indietro nella navigazione
+     * 
+     */ 
     router.push({ // Non è necessario specificare l'id in quanto siamo in una rotta "sorella"
         name: 'event-details'
     })
