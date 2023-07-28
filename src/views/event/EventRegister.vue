@@ -1,11 +1,19 @@
 <script setup>
+import { inject } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const gStore = inject('gStore')
 
 const register = () => {
     // Chiamata API
     // If SUCCESS redirect to EventDetails
+
+    gStore.flashMessage = `You are successfully registered for ${event.title}`
+
+    setTimeout(() => {
+        gStore.flashMessage = ''
+    }, 3000)
 
     /**
      * router.replace non salva la pagina nella storia di navigazione
