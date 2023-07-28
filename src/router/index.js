@@ -16,7 +16,7 @@ const router = createRouter({
       component: EventListView
     },
     {
-      path: '/event/:id',
+      path: '/events/:id',
       name: 'event-layout',
       props: true,
       component: EventLayout,
@@ -37,6 +37,12 @@ const router = createRouter({
           component: EventEdit
         }
       ]
+    },
+    { // Dopo aver rinominato le rotte ( da event > events ) si fa il redirect delle vecchie
+      path: '/event/:afterEvent(.*)',
+      redirect: to => {
+        return { path: '/events/' + to.params.afterEvent }
+      }
     },
     {
       path: '/about',
