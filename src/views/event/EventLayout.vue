@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import EventService from '@/services/EventService.js'
 
 const props = defineProps({
@@ -8,13 +9,22 @@ const props = defineProps({
     }
 })
 
+const router = useRouter()
 const event = ref(null)
 
 onMounted(() => {
     EventService.getEvent(props.id).then((response) => {
         event.value = response.data
     }).catch((error) => {
-        console.log(error)
+        if (error.response && error.response.status == 404) {
+            router.push({
+                name: 'not-found-resource',
+                params: { resource: 'event' }
+            })
+        }
+        router.push({
+            name: 'network-error'
+        })
     })
 })
 </script>
