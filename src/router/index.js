@@ -15,6 +15,12 @@ import nProgress from 'nprogress'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior() {
+    // if (savedPosition)
+    //   return savedPosition
+    // else
+    //   return { top: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -56,7 +62,8 @@ const router = createRouter({
         {
           path: 'edit',
           name: 'event-edit',
-          component: EventEdit
+          component: EventEdit,
+          meta: { requireAuth: true }
         }
       ]
     },
@@ -90,8 +97,20 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(() => {
+router.beforeEach((to, from) => {
   nProgress.start()
+
+  const notAutorized = true
+  if (to.meta.requireAuth && notAutorized) {
+    GStore.flashMessage = ' Sorry, you are not authorized ...'
+    setTimeout(() => {
+      GStore.flashMessage = ''
+    }, 3000)
+    if (from.href)
+      return false
+    else
+      return { path: '/' }
+  }
 })
 
 router.afterEach(() => {
