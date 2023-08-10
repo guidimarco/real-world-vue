@@ -2,9 +2,7 @@
 import { inject } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
-const gStore = inject('gStore')
-
-
+const gStore = inject('GStore')
 </script>
 
 <template>

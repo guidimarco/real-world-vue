@@ -1,42 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import EventService from '@/services/EventService.js'
+import { inject } from 'vue'
 
-const props = defineProps({
-    id: {
-        required: true
-    }
-})
-
-const router = useRouter()
-const event = ref(null)
-
-onMounted(() => {
-    EventService.getEvent(props.id).then((response) => {
-        event.value = response.data
-    }).catch((error) => {
-        if (error.response && error.response.status == 404) {
-            router.push({
-                name: 'not-found-resource',
-                params: { resource: 'event' }
-            })
-        }
-        router.push({
-            name: 'network-error'
-        })
-    })
-})
+const gStore = inject('GStore')
 </script>
 
 <template>
-    <div v-if="event">
+    <div v-if="gStore.event">
         <div id="nav">
             <router-link :to="{ name: 'event-details' }">Details</router-link> | 
             <router-link :to="{ name: 'event-register' }">Register</router-link> | 
             <router-link :to="{ name: 'event-edit' }">Edit</router-link>
         </div>
 
-        <router-view :event="event" />
+        <router-view :event="gStore.event" />
     </div>
 </template>

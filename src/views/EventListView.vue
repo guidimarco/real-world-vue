@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, watchEffect, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeRouteUpdate, useRouter } from 'vue-router';
 import EventService from '@/services/EventService.js';
 import EventCard from '@/components/EventCard.vue';
 
@@ -26,7 +26,7 @@ onMounted(() => {
   watchEffect(() => {
     // Annullo gli eventi così l'utente si accorge che è stata fatta una chiamata API
     events.value = null
-    EventService.getEvents(2, props.page).then((response) => {
+    return EventService.getEvents(2, props.page).then((response) => {
       events.value = response.data
       totalEvents.value = response.headers['x-total-count']
     }).catch(() => {

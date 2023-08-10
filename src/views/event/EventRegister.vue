@@ -3,7 +3,7 @@ import { inject } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const gStore = inject('gStore')
+const gStore = inject('GStore')
 
 const register = () => {
     // Chiamata API
